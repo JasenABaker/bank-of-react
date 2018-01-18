@@ -3,14 +3,48 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './components/Home'
 import UserProfile from './components/UserProfile'
 import LogIn from './components/Login'
+import DebitPage from './components/DebitsPage'
+
+import axios from 'axios'
 
 class App extends Component {
   state = {
-    accountBalance: 14568.27,
     currentUser: {
       userName: 'bob_loblaw',
-      memberSince: '08/23/99'
+      memberSince: '08/23/99',
+      debits: [],
+      credits: []
     }
+  }
+  getDebits = () => {
+    axios.get('http://localhost:4000/debits')
+    .then(response => {
+      const debit = response.data
+
+      this.setState({debits: debit})
+    })
+  }
+
+  getCredits = () => {
+    axios.get('http://localhost:4000/credits')
+    .then(response => {
+      const credit = response.data
+
+      this.setState({credits: credit})
+    })
+  }
+
+  addNewDebit = (newDebit) => {
+    const debits = [...this.state.debits]
+    debits.push(newDebit)
+
+    this.setState({debits})
+  }
+
+  addNewCredit = (newCredit) => {
+    const credits = [...this.state.credits]
+    credits.push(newCredit)
+    this.setState({credits})
   }
 
   mockLogIn = (logInInfo) => {
@@ -19,12 +53,29 @@ class App extends Component {
     this.setState({ currentUser: newUser })
   }
 
+calculateAccount = () =>{
+  const totalCredit = this.state.credits.reduce((totalCredits, credit) =>{
+    return totalCredits + credit.amount
+  }, 0)
+
+  const totalDebits = this.state.debits.reduce((totalDebits, debit) => {
+    return totalDebits + debit.amount
+  }, 0)
+
+  return totalCredits - totalDebits
+}
+componentWillMount(){
+  this.getDebits()
+  this.getCredits()
+}
+
   render() {
+    const accountBalance = this.calculateAccount()
     console.log(Date.now())
 
     const HomeComponent = () => (
       <Home
-        accountBalance={this.state.accountBalance} />
+        accountBalance={accountBalance} />
     )
 
     const UserProfileComponent = () => (
@@ -40,12 +91,20 @@ class App extends Component {
         {...this.props} />
     )
 
+    const DebitPageComponent = () =>{
+      <DebitPage
+        debits={this.state.debits}
+        addNewDebit={this.addNewDebit}
+        accountBalance={accountBalance} {...this.props}/>
+    }
+
     return (
       <Router>
         <Switch>
           <Route exact path="/" render={HomeComponent} />
           <Route exact path="/userProfile" render={UserProfileComponent} />
           <Route exact path="/login" render={LogInComponent} />
+          <Route exact path="/debits" render={DebitPageComponent}/>
         </Switch>
       </Router>
     );

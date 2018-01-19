@@ -18,33 +18,34 @@ class App extends Component {
   }
   getDebits = () => {
     axios.get('http://localhost:4000/debits')
-    .then(response => {
-      const debits = response.data
+      .then(response => {
+        const debits = response.data
 
-      this.setState({debits})
-    })
+        this.setState({ debits })
+      })
   }
 
   getCredits = () => {
     axios.get('http://localhost:4000/credits')
-    .then(response => {
-      const credits = response.data
+      .then(response => {
 
-      this.setState({credits})
-    })
+        const credits = response.data
+
+        this.setState({ credits })
+      })
   }
 
   addNewDebit = (newDebit) => {
     const debits = [...this.state.debits]
     debits.push(newDebit)
 
-    this.setState({debits})
+    this.setState({ debits })
   }
 
   addNewCredit = (newCredit) => {
     const credits = [...this.state.credits]
     credits.push(newCredit)
-    this.setState({credits})
+    this.setState({ credits })
   }
 
   mockLogIn = (logInInfo) => {
@@ -53,25 +54,26 @@ class App extends Component {
     this.setState({ currentUser: newUser })
   }
 
-calculateAccount = () => {
-  const totalCredit = this.state.credits.reduce((totalCredits, credit) =>{
-    return totalCredits + credit.amount
-  }, 0)
+  calculateAccount = () => {
+   
+    const totalCredits = this.state.credits.reduce((totalCredits, credit) => {
+      return totalCredits + credit.amount
+    }, 0)
 
-  const totalDebits = this.state.debits.reduce((totalDebits, debit) => {
-    return totalDebits + debit.amount
-  }, 0)
+    const totalDebits = this.state.debits.reduce((totalDebits, debit) => {
+      return totalDebits + debit.amount
+    }, 0)
 
-  return totalCredit - totalDebits
-}
-componentWillMount() {
-  this.getDebits()
-  this.getCredits()
-}
+    return totalCredits - totalDebits
+  }
+  componentWillMount() {
+    this.getDebits()
+    this.getCredits()
+  }
 
   render() {
     const accountBalance = this.calculateAccount()
-    console.log(Date.now())
+    // console.log(Date.now())
 
     const HomeComponent = () => (
       <Home
@@ -91,11 +93,12 @@ componentWillMount() {
         {...this.props} />
     )
 
-    const DebitPageComponent = () =>{
+    const DebitPageComponent = () => {
+     
       <DebitPage
         debits={this.state.debits}
         addNewDebit={this.addNewDebit}
-        accountBalance={accountBalance} {...this.props}/>
+        accountBalance={accountBalance} {...this.props} />
     }
 
     return (
@@ -104,7 +107,7 @@ componentWillMount() {
           <Route exact path="/" render={HomeComponent} />
           <Route exact path="/userProfile" render={UserProfileComponent} />
           <Route exact path="/login" render={LogInComponent} />
-          <Route exact path="/debits" render={DebitPageComponent}/>
+          <Route exact path="/debits" render={DebitPageComponent} />
         </Switch>
       </Router>
     );

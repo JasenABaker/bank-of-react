@@ -1,57 +1,52 @@
 import React, { Component } from 'react'
 
-
-class NewDebitFrom extends Component {
+class NewCreditForm extends Component {
     state = {
-        newDebit:{
+        newCredit: {
             amount: 0.00,
             description: '',
             date: Date.now(),
         }
-        
     }
-
-    handleInputeChange =(event) =>{
+    handleInputChange = (event) => {
         const attribute = event.target.name
         let value = event.target.value
 
         if(attribute === 'amount') {
             value = Number(value)
         }
-    
-    const newDebit = {...this.state.newDebit}
-    newDebit[attribute] = value
+        const newCredit = {...this.state.newCredit}
+        newCredit[attribute] = value
 
-    this.setState({newDebit})
+        this.setState({newCredit})
+    }
+    resetForm= () => {
+        const newCredit = {...this.state.newCredit}
+        this.setState({newCredit})
     }
 
-    resetForm = () => {
-        const newDebit = {...this.defaultState.newDebit}
-        this.setState({newDebit})
-    }
-
-    addNewDebit = (event) => {
+    addNewCredit = (event) => {
         event.preventDefault()
-        this.props.addNewDebit(this.state.newDebit)
+        this.props.addNewCredit(this.state.newCredit)
         this.resetForm()
     }
     render(){
         return(
             <div>
-                <form onSubmit={this.addNewDebit}>
+                <form onSubmit={this.addNewCredit}>
                 <div>
                     <span>Amount (USD) </span>
                     <input
                         type="number"
                         name="amount"
                         placeholder="Amount"
-                        value={this.state.newDebit.amount}
-                        onChange={this.handleInputeChange}/>
+                        value={this.state.newCredit.amount}
+                        onChange={this.handleInputChange}/>
                     </div>
                     <div>
                         <input
                             type="submit"
-                            value="Add New Debit"/>
+                            value="Add New Credit"/>
                     </div>
 
             </form>
@@ -61,4 +56,11 @@ class NewDebitFrom extends Component {
 
 }
 
-export default NewDebitFrom
+export default NewCreditForm
+
+
+
+
+}
+
+

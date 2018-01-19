@@ -18,3 +18,5 @@ class CreditList extends Component {
         )
     }
 }
+
+export default CreditList

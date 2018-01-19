@@ -60,3 +60,5 @@ class NewDebitFrom extends Component {
     }
 
 }
+
+export default NewDebitFrom

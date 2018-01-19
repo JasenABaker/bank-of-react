@@ -5,7 +5,7 @@ import Debit from './Debit'
 
 class DebitList extends Component {
     render() {
-        const debitComponents = props.debits.map((debit, index)=>{
+        const debitComponents = this.props.debits.map((debit, index)=>{
             return <Debit
                         description={debit.description}
                         amount={debit.amount}

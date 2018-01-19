@@ -19,18 +19,18 @@ class App extends Component {
   getDebits = () => {
     axios.get('http://localhost:4000/debits')
     .then(response => {
-      const debit = response.data
+      const debits = response.data
 
-      this.setState({debits: debit})
+      this.setState({debits})
     })
   }
 
   getCredits = () => {
     axios.get('http://localhost:4000/credits')
     .then(response => {
-      const credit = response.data
+      const credits = response.data
 
-      this.setState({credits: credit})
+      this.setState({credits})
     })
   }
 
@@ -53,7 +53,7 @@ class App extends Component {
     this.setState({ currentUser: newUser })
   }
 
-calculateAccount = () =>{
+calculateAccount = () => {
   const totalCredit = this.state.credits.reduce((totalCredits, credit) =>{
     return totalCredits + credit.amount
   }, 0)
@@ -62,9 +62,9 @@ calculateAccount = () =>{
     return totalDebits + debit.amount
   }, 0)
 
-  return totalCredits - totalDebits
+  return totalCredit - totalDebits
 }
-componentWillMount(){
+componentWillMount() {
   this.getDebits()
   this.getCredits()
 }

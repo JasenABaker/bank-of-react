@@ -13,7 +13,7 @@ class App extends Component {
       userName: 'bob_loblaw',
       memberSince: '08/23/99',
       debits: [],
-      credits: []
+      credits: [],
     }
   }
   getDebits = () => {

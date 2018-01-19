@@ -13,7 +13,7 @@ const DebitPage = (props) => {
             <Link to='/'>Back to Home</Link>
             
 
-            <AccountBalance accountBalance={props.accuntBalance}/>
+            <AccountBalance accountBalance={props.accountBalance}/>
 
 
             <NewDebitForm addNewDebit={props.addNewDebit}/>

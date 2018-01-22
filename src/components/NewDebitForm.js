@@ -26,7 +26,7 @@ class NewDebitFrom extends Component {
     }
 
     resetForm = () => {
-        const newDebit = {...this.defaultState.newDebit}
+        const newDebit = {...this.state.newDebit}
         this.setState({newDebit})
     }
 

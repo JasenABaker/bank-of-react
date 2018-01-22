@@ -21,7 +21,7 @@ class App extends Component {
       .then(response => {
         const debits = response.data
 
-        this.setState({ debits })
+      this.setState({ debits })
       })
   }
 
@@ -55,7 +55,7 @@ class App extends Component {
   }
 
   calculateAccount = () => {
-   
+    console.log(this.state.credits)
     const totalCredits = this.state.credits.reduce((totalCredits, credit) => {
       return totalCredits + credit.amount
     }, 0)
